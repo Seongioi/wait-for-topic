@@ -1,6 +1,6 @@
 # Wait for topic
 
-This image waits for a list of Kafka topics to be created and exits afterwards.
+This image waits for a list of Kafka topics to be created and exit when they are.
 
 Configure using environments variables:
 
