@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-if [[ -z "${ATTEMPTS}" ]]; then
+if [ -z "${ATTEMPTS}" ]; then
   MAX_RETRIES=7
 else
   MAX_RETRIES=${ATTEMPTS}
 fi
 
-if [[ -z "${KAFKA_BROKER}" ]]; then
+if [ -z "${KAFKA_BROKER}" ]; then
   echo "ERROR: Kafka broker not set"
   exit 1
 fi
 
-if [[ -z "${TOPICS}" ]]; then
+if [ -z "${TOPICS}" ]; then
   echo "ERROR: No topics set"
   exit 1
 fi
@@ -25,18 +25,20 @@ until [ "$cur_tries" -gt "$MAX_RETRIES" ] || "$all_found"; do
   all_found=true
   for i in ${TOPICS//:/ }
   do
-    if [[ -z $(kafkacat -b $KAFKA_BROKER -L  2> /dev/null | grep $i) ]]; then
+    if [[ -z $(kafkacat -b $KAFKA_BROKER -L  2> /dev/null | grep $i) 2> /dev/null ]]; then
       all_found=false
     fi
   done
 
-  printf 'retrying...\n'
-  sleep 3
-  cur_tries=$((cur_tries+1))
+  if [ "$all_found" = false ]; then
+    printf 'retrying...\n'
+    sleep 3
+    cur_tries=$((cur_tries+1))
+  fi
 done
 
 if [ "$cur_tries" -lt "$MAX_RETRIES" ]; then
-  echo 'OK'
+  echo 'All topics found'
 else
   echo "ERROR: Timed out waiting for" $KAFKA_BROKER >&2
   exit 1
