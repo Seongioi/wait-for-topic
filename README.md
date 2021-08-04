@@ -1,6 +1,6 @@
 # Wait for topic
 
-This image waits for a list of Kafka topics to be created and exit when they are. [Docker Repo](https://hub.docker.com/r/seongiwang/wait-for-topic)
+This image will wait for a list of Kafka topics to be created before exiting. [Docker Repo](https://hub.docker.com/r/seongiwang/wait-for-topic)
 
 Configure using environments variables:
 
