@@ -2,7 +2,7 @@
 
 This image will wait for a list of Kafka topics to be created before exiting. [Docker Repo](https://hub.docker.com/r/seongiwang/wait-for-topic)
 
-Configure using environments variables:
+Configure using the following environment variables:
 
 | Name         	| Description                  	| Default 	|
 |--------------	|------------------------------	|---------	|
